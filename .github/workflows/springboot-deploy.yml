@@ -15,7 +15,7 @@ jobs:
                   key: ${{ secrets.EC2_PRIVATE_KEY }}
                   script_stop: true
                   script: |
-
+                      git config --global --add safe.directory /home/***/git-action-cicd-pipeline
                       cd /home/ubuntu/git-action-cicd-pipeline
                       git pull origin main
                       cd /spring-boot-cicd
