@@ -29,7 +29,9 @@ jobs:
         run: chmod +x ./spring-boot-cicd/gradlew
 
       - name: Build with Gradle
-        run: ./spring-boot-cicd/gradlew build
+        working-directory: ./spring-boot-cicd
+        run: ./gradlew build
 
       - name: Test with Gradle
-        run: ./spring-boot-cicd/gradlew test
+        working-directory: ./spring-boot-cicd
+        run: ./gradlew test
