@@ -7,16 +7,18 @@ jobs:
     Deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Set Safe Directory
-              run: git config --global --add safe.directory /home/***/git-action-cicd-pipeline
+            - name: SSH 로 EC2 접속하기
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.EC2_HOST }}
+                  username: ${{ secrets.EC2_USERNAME }}
+                  key: ${{ secrets.EC2_PRIVATE_KEY }}
+                  script_stop: true
+                  script: |
 
-            - name: Pull Repository
-              run: |
-                  cd /home/***/git-action-cicd-pipeline/spring-boot-cicd
-                  git pull origin main
-
-            - name: Build and Deploy
-              run: |
-                  ./gradlew clean build
-                  sudo fuser -k -n tcp 9990 || true
-                  nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
+                      cd /home/ubuntu/git-action-cicd-pipeline
+                      git pull origin main
+                      cd /spring-boot-cicd
+                      ./gradlew clean build
+                      sudo fuser -k -n tcp 9990 || true
+                      nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
