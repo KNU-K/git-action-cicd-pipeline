@@ -26,6 +26,6 @@ public class TestController {
     }
     @GetMapping("/test")
     public String testDeploy(){
-        return "hello";
+        return "hello world";
     }
 }
