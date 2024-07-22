@@ -24,8 +24,14 @@ public class TestController {
         log.info("Operands received: operand1={}, operand2={}", operand1, operand2);
         return calcService.add(operand1, operand2);
     }
+
     @GetMapping("/test")
     public String testDeploy(){
-        return "hello";
+        return "hello world";
+    }
+
+    @GetMapping("/test2")
+    public String testDeploy2(){
+        return "hello world2 deploy good";
     }
 }
