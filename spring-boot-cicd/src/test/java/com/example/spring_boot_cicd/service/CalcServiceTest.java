@@ -8,12 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class CalcServiceTest {
-    private final CalcService calcService;
-
     @Autowired
-    public CalcServiceTest(CalcService calcService) {
-        this.calcService = calcService;
-    }
+    private  CalcService calcService;
+
 
     @Test
     @DisplayName("Addition Test")
