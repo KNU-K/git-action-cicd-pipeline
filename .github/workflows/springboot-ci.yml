@@ -8,13 +8,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
-    permissions:
-      contents: read
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -22,33 +26,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for Gradle Wrapper
-        uses: chmod +x ./spring-boot-cicd/gradlew
+        run: chmod +x ./spring-boot-cicd/gradlew
 
       - name: Build with Gradle
         run: ./spring-boot-cicd/gradlew build
 
       - name: Test with Gradle
         run: ./spring-boot-cicd/gradlew test
-
-  # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
-  # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
-  #
-  # - name: Setup Gradle
-  #   uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-  #   with:
-  #     gradle-version: '8.5'
-  #
-  # - name: Build with Gradle 8.5
-  #   run: gradle build
-
-#  Deploy:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: executing remote ssh commands using password
-#        uses: appleboy/ssh-action@v1.0.3
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          password: ${{ secrets.PASSWORD }}
-#          port: ${{ secrets.PORT }}
-#          script: whoami
